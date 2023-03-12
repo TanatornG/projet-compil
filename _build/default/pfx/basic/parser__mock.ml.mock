@@ -1,0 +1,51 @@
+
+type token = 
+  | INT of (
+# 12 "pfx/basic/parser.mly"
+       (int)
+# 7 "pfx/basic/parser__mock.ml.mock"
+)
+  | EOF
+
+# 1 "pfx/basic/parser.mly"
+  
+  (* Ocaml code here*)
+
+
+# 16 "pfx/basic/parser__mock.ml.mock"
+
+let menhir_begin_marker =
+  0
+
+and xv_program =
+  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
+# 30 "pfx/basic/parser.mly"
+              _2
+# 25 "pfx/basic/parser__mock.ml.mock"
+   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
+# 30 "pfx/basic/parser.mly"
+         i
+# 29 "pfx/basic/parser__mock.ml.mock"
+   : (
+# 12 "pfx/basic/parser.mly"
+       (int)
+# 33 "pfx/basic/parser__mock.ml.mock"
+  )) (_startpos_i_ : Lexing.position) (_endpos_i_ : Lexing.position) (_startofs_i_ : int) (_endofs_i_ : int) (_loc_i_ : Lexing.position * Lexing.position) ->
+    ((
+# 30 "pfx/basic/parser.mly"
+                   ( i,[] )
+# 38 "pfx/basic/parser__mock.ml.mock"
+     : 'tv_program) : (
+# 20 "pfx/basic/parser.mly"
+       (Ast.program)
+# 42 "pfx/basic/parser__mock.ml.mock"
+    )) in
+  ((let rec diverge() = diverge() in diverge()) : 'tv_program)
+
+and menhir_end_marker =
+  0
+
+# 32 "pfx/basic/parser.mly"
+  
+
+# 52 "pfx/basic/parser__mock.ml.mock"
