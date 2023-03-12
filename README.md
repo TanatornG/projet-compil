@@ -12,31 +12,33 @@ Ce μ-projet est un compilateur simple
 
 ===============
 
-Sources
+Sources : Pdf présentant le projet (cf "compilation-project")
 -------
 
-Git repository: https://redmine-df.telecom-bretagne.eu/git/PROJECTNAME
+Repo git : https://github.com/TanatornG/projet-compil.git
 
-Release : tag 1.0 
+Version : 1.0 - Exercice 4
 
 ===============
 
-How to…
+Comment...
 -------
 
-…retrieve the sources?
+... récupérer le code source
 
-  git clone https://redmine-df.telecom-bretagne.eu/git/PROJECTNAME
+  git clone https://github.com/TanatornG/projet-compil.git
 
-…compile?
+... compiler, exécuter et tester le projet ?
 
-  dune …
-
-…execute and test?
-
-  dune utop and then use the libraries
-  (from project root) dune exec expr/main.exe -- expr/basic/tests/an_example.expr
-  dune exec ./pfxVM.exe -- TESTFILE.pfx -a 12 -a 52
+  A l'exercice 4, on ne s'intéresse qu'aux fichiers ast.ml et ast.mli.
+  Une fonction contenant des tests unitaires est implémentée dans eval.ml.
+  Pour lancer ces tests :
+  - ocamlopt -c ast.mli
+  - ocamlopt -c ast.ml
+  - ocamlopt -c eval.mli
+  - ocamlopt -c eval.ml
+  - ocamlopt -o ex4 ast.ml eval.ml
+  - ./ex4
 
 ===============
 
@@ -48,50 +50,50 @@ Le projet suit l'organisation suivante :
 Arbre du projet :
 
 project
-├── README
-├── dune-project
-├── expr: the expr compiler
-│   ├── README
-│   ├── basic
-│   │   ├── ast.ml
-│   │   ├── ast.mli
-│   │   ├── dune
-│   │   ├── eval.ml
-│   │   ├── eval.mli
-│   │   ├── lexer.mll
-│   │   ├── parser.mly
-│   │   ├── tests: for tests
-│   │   │   └── an_example.expr
-│   │   ├── toPfx.ml             <- To edit
-│   │   └── toPfx.mli
-│   ├── common
-│   │   ├── binOp.ml
-│   │   ├── binOp.mli
-│   │   └── dune
-│   ├── compiler.ml: main file for the expr compiler
-│   ├── dune
-│   ├── fun: the expr parser for section 7
-│   │   ├── ast.ml
-│   │   ├── ast.mli
-│   │   ├── lexer.mll
-│   │   └── parser.mly
-│   └── main.ml
-├── pfx: the pfx VM
-│   ├── basic
-│   │   ├── ast.ml               <- Implémentation faite (Question 4.1)
-│   │   ├── ast.mli
-│   │   ├── dune
-│   │   ├── eval.ml              <- Implémentation faite (Question 4.2)
-│   │   ├── eval.mli
-│   │   ├── lexer.mll            <- To edit
-│   │   ├── parser.mly           <- To edit
-│   │   └── tests: for tests
-│   │       └── ok_prog.pfx
-│   └── pfxVM.ml: main file for the pfx VM
-└── utils
-    ├── dune
-    ├── location.ml: module offering a data type for a location in a file
-    └── location.mli
+---- README
+---- dune-project
+---- expr: the expr compiler
+│   ---- README
+│   ---- basic
+│   │   ---- ast.ml
+│   │   ---- ast.mli
+│   │   ---- dune
+│   │   ---- eval.ml
+│   │   ---- eval.mli
+│   │   ---- lexer.mll
+│   │   ---- parser.mly
+│   │   ---- tests: for tests
+│   │      ---- an_example.expr
+│   │   ---- toPfx.ml             <- To edit
+│   │   ---- toPfx.mli
+│   ---- common
+│   │   ---- binOp.ml
+│   │   ---- binOp.mli
+│   │   ---- dune
+│   ---- compiler.ml: main file for the expr compiler
+│   ---- dune
+│   ---- fun: the expr parser for section 7
+│   │   ---- ast.ml
+│   │   ---- ast.mli
+│   │   ---- lexer.mll
+│   │   ---- parser.mly
+│   ---- main.ml
+---- pfx: the pfx VM
+│   ---- basic
+│   │   ---- ast.ml               <- Implémentation faite (Question 4.1)
+│   │   ---- ast.mli
+│   │   ---- dune
+│   │   ---- eval.ml              <- Implémentation faite (Question 4.2)
+│   │   ---- eval.mli
+│   │   ---- lexer.mll            <- To edit
+│   │   ---- parser.mly           <- To edit
+│   │   ---- tests: for tests
+│   │       ---- ok_prog.pfx
+│   ---- pfxVM.ml: main file for the pfx VM
+---- utils
+    ---- dune
+    ---- location.ml: module offering a data type for a location in a file
+    ---- location.mli
 ===============
 
 Avancée du projet
@@ -101,6 +103,8 @@ Avancée du projet
 Voir les fichiers :
  - project/pfx/basic/ast.ml
  - project/pfx/basic/eval.ml
+
+ Les 14 tests unitaires réalisés dans eval.ml sont corrects (le comportement du programme est celui attendu).
 
 ===============
 
