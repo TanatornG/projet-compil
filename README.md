@@ -54,47 +54,89 @@ project
 ---- README
 
 ---- dune-project
+
 ---- expr: the expr compiler
+
 │   ---- README
+
 │   ---- basic
+
 │   │   ---- ast.ml
+
 │   │   ---- ast.mli
+
 │   │   ---- dune
+
 │   │   ---- eval.ml
+
 │   │   ---- eval.mli
+
 │   │   ---- lexer.mll
+
 │   │   ---- parser.mly
+
 │   │   ---- tests: for tests
+
 │   │      ---- an_example.expr
+
 │   │   ---- toPfx.ml             <- To edit
+
 │   │   ---- toPfx.mli
+
 │   ---- common
+
 │   │   ---- binOp.ml
+
 │   │   ---- binOp.mli
+
 │   │   ---- dune
+
 │   ---- compiler.ml: main file for the expr compiler
+
 │   ---- dune
+
 │   ---- fun: the expr parser for section 7
+
 │   │   ---- ast.ml
+
 │   │   ---- ast.mli
+
 │   │   ---- lexer.mll
+
 │   │   ---- parser.mly
+
 │   ---- main.ml
+
 ---- pfx: the pfx VM
+
 │   ---- basic
+
 │   │   ---- ast.ml               <- Implémentation faite (Question 4.1)
+
 │   │   ---- ast.mli
+
 │   │   ---- dune
+
 │   │   ---- eval.ml              <- Implémentation faite (Question 4.2)
+
 │   │   ---- eval.mli
+
 │   │   ---- lexer.mll            <- To edit
+
 │   │   ---- parser.mly           <- To edit
+
 │   │   ---- tests: for tests
+
 │   │       ---- ok_prog.pfx
+
 │   ---- pfxVM.ml: main file for the pfx VM
+
 ---- utils
+
     ---- dune
+
     ---- location.ml: module offering a data type for a location in a file
+
     ---- location.mli
 ===============
 
