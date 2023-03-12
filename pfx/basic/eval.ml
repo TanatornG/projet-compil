@@ -10,7 +10,8 @@ let string_of_state (cmds,stack) =
     (sprintf " with stack %s" (string_of_stack stack))
 
 (* Question 4.2 *)
-(* Auteur : Nicolas Sempéré *)
+(* Auteur : Nicolas Sempéré 
+   Implémentation des petits pas des séquences d'instruction*)
 let step state =
   match state with
 
@@ -65,59 +66,60 @@ let eval_program (numargs, cmds) args =
     | Error(msg,s) -> printf "Raised error '%s' in state %s\n" msg (string_of_state s)
   else printf "Raised error \nMismatch between expected and actual number of args\n"
   
-  let() =
-    print_endline("Quelques tests unitaires de l'implémentation du type 'command' et de la fonction 'step'.");;
-    let q = [Push 4; Push 55; Push 432; Pop; Pop; Pop; Pop; Pop; Pop];; let stack = [42;4242;249384729742];;
-    (*printf "q est de taille %i \n" (List.length q);;*)
-    printf "\n Test 1 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
-    let q = [Pop; Push 2; Pop;];; let stack = [42;24];;
-    printf "\n Test 2 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
-    let q = [Pop;];; let stack = [];;
-    printf "\n Test 3 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+(* Fonction de tests unitaires *)
+let() =
+  print_endline("Quelques tests unitaires de l'implémentation du type 'command' et de la fonction 'step'.");;
+  let q = [Push 4; Push 55; Push 432; Pop; Pop; Pop; Pop; Pop; Pop];; let stack = [42;4242;249384729742];;
+  (*printf "q est de taille %i \n" (List.length q);;*)
+  printf "\n Test 1 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
+  let q = [Pop; Push 2; Pop;];; let stack = [42;24];;
+  printf "\n Test 2 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
+  let q = [Pop;];; let stack = [];;
+  printf "\n Test 3 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [];; let stack = [];;
-    printf "\n Test 4 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [];; let stack = [];;
+  printf "\n Test 4 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Add];; let stack = [];;
-    printf "\n Test 5 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Add];; let stack = [];;
+  printf "\n Test 5 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Push 2; Push 3; Add];; let stack = [];;
-    printf "\n Test 6 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Push 2; Push 3; Add];; let stack = [];;
+  printf "\n Test 6 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Push 12; Push 7; Sub];; let stack = [];;
-    printf "\n Test 7 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Push 12; Push 7; Sub];; let stack = [];;
+  printf "\n Test 7 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Push 12; Push 7; Swap; Sub];; let stack = [];;
-    printf "\n Test 8 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Push 12; Push 7; Swap; Sub];; let stack = [];;
+  printf "\n Test 8 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Mul];; let stack = [77; 88; 4; 2];;
-    printf "\n Test 9 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Mul];; let stack = [77; 88; 4; 2];;
+  printf "\n Test 9 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Div];; let stack = [77; 88; 4; 2];;
-    printf "\n Test 10 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Div];; let stack = [77; 88; 4; 2];;
+  printf "\n Test 10 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Div];; let stack = [77; 0; 88; 2];;
-    printf "\n Test 11 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Div];; let stack = [77; 0; 88; 2];;
+  printf "\n Test 11 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Add; Div];; let stack = [3; 7; 2];;
-    printf "\n Test 12 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Add; Div];; let stack = [3; 7; 2];;
+  printf "\n Test 12 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Rem];; let stack = [3; 0; 2];;
-    printf "\n Test 13 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Rem];; let stack = [3; 0; 2];;
+  printf "\n Test 13 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
 
-    let q = [Rem];; let stack = [10; 3];;
-    printf "\n Test 14 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
-    eval_program (List.length(stack), q) stack;;
+  let q = [Rem];; let stack = [10; 3];;
+  printf "\n Test 14 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
