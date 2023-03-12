@@ -49,10 +49,10 @@ Le projet suit l'organisation suivante :
 
 Arbre du projet :
 
-project
-----> README
-----> dune-project
-----> expr: the expr compiler
+project :
+  - README.md
+  - dune-project
+  - expr: the expr compiler
 │   ---- README
 │   ---- basic
 │   │   ---- ast.ml
