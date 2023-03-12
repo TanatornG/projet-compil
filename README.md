@@ -33,6 +33,7 @@ Comment...
   A l'exercice 4, on ne s'intéresse qu'aux fichiers ast.ml et eval.ml.
   Une fonction contenant des tests unitaires est implémentée dans eval.ml.
   Pour lancer ces tests :
+  - cd pfx/basic
   - ocamlopt -c ast.mli
   - ocamlopt -c ast.ml
   - ocamlopt -c eval.mli
@@ -101,6 +102,7 @@ project :
       - dune
       - location.ml: module offering a data type for a location in a file
       - location.mli
+
 ===============
 
 Avancée du projet
