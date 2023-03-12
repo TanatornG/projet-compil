@@ -30,7 +30,7 @@ Comment...
 
 ... compiler, exécuter et tester le projet ?
 
-  A l'exercice 4, on ne s'intéresse qu'aux fichiers ast.ml et ast.mli.
+  A l'exercice 4, on ne s'intéresse qu'aux fichiers ast.ml et eval.ml.
   Une fonction contenant des tests unitaires est implémentée dans eval.ml.
   Pour lancer ces tests :
   - ocamlopt -c ast.mli
