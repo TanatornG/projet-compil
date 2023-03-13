@@ -65,9 +65,10 @@ let eval_program (numargs, cmds) args =
     | Ok(Some result) -> printf "= %i\n" result
     | Error(msg,s) -> printf "Raised error '%s' in state %s\n" msg (string_of_state s)
   else printf "Raised error \nMismatch between expected and actual number of args\n"
-  
-(* Fonction de tests unitaires *)
-let() =
+;;
+(* Fonction de tests unitaires de eval.ml*)
+(*
+let () =
   print_endline("Quelques tests unitaires de l'implémentation du type 'command' et de la fonction 'step'.");;
   let q = [Push 4; Push 55; Push 432; Pop; Pop; Pop; Pop; Pop; Pop];; let stack = [42;4242;249384729742];;
   (*printf "q est de taille %i \n" (List.length q);;*)
@@ -123,3 +124,12 @@ let() =
   let q = [Rem];; let stack = [10; 3];;
   printf "\n Test 14 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
   eval_program (List.length(stack), q) stack;;
+  
+  let q = [Push 1; Push 5; Div];; let stack = [];;
+  printf "\n Test 15 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
+  
+  let q = [Push 3; Push 7; Rem];; let stack = [];;
+  printf "\n Test 16 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
+  *)
