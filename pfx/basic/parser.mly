@@ -1,14 +1,12 @@
 %{
-  (* Ocaml code here*)
-
+  open Ast
 %}
 
 (**************
  * The tokens *
  **************)
 
-(* enter tokens here, they should begin with %token *)
-%token EOF
+%token EOF PUSH POP SWAP ADD SUB MUL DIV REM NEWLINE
 %token <int> INT
 
 
@@ -17,16 +15,35 @@
  ******************************)
 
 (* enter your %start clause here *)
-%start <Ast.program> program
+%start <Ast.program list> programs
 
 %%
+
+
+
+
 
 (*************
  * The rules *
  *************)
 
-(* list all rules composing your grammar; obviously your entry point has to be present *)
+programs:
+  | p=program + { p }
+program: 
+  | i=INT; c=cmd { i, c }
+  
 
-program: i=INT EOF { i,[] }
+cmd: 
+  | PUSH cmd { failwith ("Argument missing for push function") }
+  | PUSH i=INT c=cmd { (Push i)::c }
+  | POP c=cmd { Pop::c }
+  | SWAP c=cmd { Swap::c }
+  | ADD c=cmd { Add::c }
+  | SUB c=cmd { Sub::c }
+  | MUL c=cmd { Mul::c }
+  | DIV c=cmd { Div::c }
+  | REM c=cmd { Rem::c }
+  | EOF { [] }
+  | NEWLINE { [] }
 
 %%
