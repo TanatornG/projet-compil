@@ -1,7 +1,8 @@
-Auteur
+Auteurs
 -------
 
 - Squelette du projet : IMT Atlantique
+- Amaury Coudray
 - Nicolas Sempéré
 
 ===============
@@ -66,6 +67,8 @@ Comment...
   - 6 - token buffer;; (à répéter jusqu'à atteindre la fin de la ligne).
   Le lexer fonctionne comme prévu, il reconnait les tokens suivant :
   "| EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM | INT |".
+
+  A l'exercice 7, on implémente des messages d'erreur avec position dans le lexer (à faire)
 
 ===============
 
