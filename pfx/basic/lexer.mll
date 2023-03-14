@@ -1,25 +1,24 @@
-  {
-  open Location
-  (*open Parser*)
-  type token =
-    | EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM
-    | INT of int
+(* Question 6.1 et 6.2 *)
+{
+  open Utils 
+  
+  type token = | EOF | INT of int | PUSH | SWAP | POP | ADD | SUB | MUL | DIV | REM
 
   let print_token = function
     | EOF -> print_string "EOF"
+    | INT i -> print_int i
     | PUSH -> print_string "PUSH"
-    | POP -> print_string "POP"
     | SWAP -> print_string "SWAP"
+    | POP -> print_string "POP"
     | ADD -> print_string "ADD"
     | SUB -> print_string "SUB"
     | MUL -> print_string "MUL"
     | DIV -> print_string "DIV"
     | REM -> print_string "REM"
-    | INT i -> print_int i
 
   let mk_int nb lexbuf =
     try INT (int_of_string nb)
-    with Failure _ -> failwith (Location.string_of (Location.curr lexbuf ))
+    with Failure _ -> failwith (Location.string_of (Location.curr lexbuf ) ^ " : illegal integer '" ^ nb ^ "'")
 }
 
 let newline = (['\n' '\r'] | "\r\n")
@@ -37,26 +36,23 @@ rule token = parse
   (* comments *)
   | "--" not_newline_char*  { token lexbuf }
   (* integers *)
-  | digit+ as nb           { mk_int nb }
-  (* Question 6.1 *)
-  (* commands  *)(***** TO COMPLETE *****)
-  | "push"    { PUSH }
-  | "pop"     { POP }
-  | "swap"    { SWAP }
-  | "add"     { ADD }
-  | "sub"     { SUB }
-  | "mul"     { MUL }
-  | "div"     { DIV }
-  | "rem"     { REM }
-
+  | digit+ as nb           { mk_int nb lexbuf }
+  (* commands  *)
+  | "push" {PUSH}
+  | "pop" {POP}
+  | "swap" {SWAP}
+  | "add" {ADD}
+  | "sub" {SUB}
+  | "mul" {MUL}
+  | "div" {DIV}
+  | "rem" {REM}
   (* illegal characters *)
-  | _ as c                  { failwith (Printf.sprintf "Illegal character '%c': " c) }
+  | _ as c                 { failwith (Location.string_of (Location.curr lexbuf)^ " : illegal character '" ^ String.make 1 c ^ "'") }
 
 {
   let rec examine_all lexbuf =
     let result = token lexbuf in
     print_token result;
-    print_string " ";
     match result with
     | EOF -> ()
     | _   -> examine_all lexbuf
