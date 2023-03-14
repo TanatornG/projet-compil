@@ -15,8 +15,7 @@ type command =
 
 type program = int * command list
 
-(* add here all useful functions and types related to the AST: for instance string_of_functions
-   C'est quoi string_of_function ? *)
+(* add here all useful functions and types related to the AST: for instance string_of_functions *)
 
 let string_of_command cmd = match cmd with
 | Push v-> sprintf "Push %i" v
