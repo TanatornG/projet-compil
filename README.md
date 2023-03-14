@@ -57,13 +57,11 @@ Comment...
 
   A l'exercice 6, on implémente un lexer de Pfx.
   Il se trouve dans le dossier pfx/basic/lexer.mll et fonctionne comme attendu.
-  Pour le tester (via utop) : 
-  - 1 - cd pfx/basic 
-  - 2 - ocamllex lexer.mll 
-  - 3 - utop 
-  - 4 - #use "lexer.ml";;
-  - 5 - let buffer = Lexing.from\_string "0 push 2 push 7 push 3 add div -- -5" ;;
-  - 6 - token buffer;; (à répéter jusqu'à atteindre la fin de la ligne).
+  On modifie le fichier pfx/basic/dune pour rendre le lexer.mll exécutable.
+  Pour le tester :
+  - 1 - Modifier le fichier pfx/basic/tests/ok_prog.pfx en écrivant le programme pfx à tester.
+  - 2 - cd pfx/basic
+  - 3 - dune exec ./lexer.exe -- ./tests/ok_prog.pfx
   Le lexer fonctionne comme prévu, il reconnait les tokens suivant :
   "| EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM | INT |".
 
@@ -171,7 +169,3 @@ Ressources utiles
 
 Difficultés
 ------------
-
-Absolument aucune car je suis trop fort. ;)
-Toujours aucune difficulté, je recherche désespéremment du challenge.
-Inarrêtable comme la pluie diluvienne de code que j'écris en abondance.
