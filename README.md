@@ -18,7 +18,7 @@ Sources : Pdf présentant le projet (cf "compilation-project")
 
 Repo git : https://github.com/TanatornG/projet-compil.git
 
-Version : 2.0 - Exercice 5
+Version : 3.0 - Exercice 6
 
 ===============
 
@@ -54,6 +54,18 @@ Comment...
   Pour vérifier le fonctionnement du compilateur :
   - 1 - Ecrire l'expression arithmétique à tester dans le fichier project/expr/basic/tests/an_example.expr
   - 2 - dune exec ./compiler.exe -- basic/tests/an_example.expr
+
+  A l'exercice 6, on implémente un lexer de Pfx.
+  Il se trouve dans le dossier pfx/basic/lexer.mll et fonctionne comme attendu.
+  Pour le tester (via utop) : 
+  - 1 - cd pfx/basic 
+  - 2 - ocamllex lexer.mll 
+  - 3 - utop 
+  - 4 - #use "lexer.ml";;
+  - 5 - let buffer = Lexing.from\_string "0 push 2 push 7 push 3 add div -- -5" ;;
+  - 6 - token buffer;; (à répéter jusqu'à atteindre la fin de la ligne).
+  Le lexer fonctionne comme prévu, il reconnait les tokens suivant :
+  "| EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM | INT |".
 
 ===============
 
@@ -106,7 +118,7 @@ project :
       - dune
       - eval.ml              <- Implémentation faite (Question 4.2)
       - eval.mli
-      - lexer.mll            <- To edit
+      - lexer.mll            <- Implémentation faite (Question 6.1 et 6.2)
       - parser.mly           <- To edit
       - tests: for tests
         - ok_prog.pfx
@@ -127,13 +139,19 @@ Voir les fichiers :
  - pfx/basic/ast.ml
  - pfx/basic/eval.ml
 
- Les 14 tests unitaires réalisés dans eval.ml sont corrects (le comportement du programme est celui attendu).
+Les 14 tests unitaires réalisés dans eval.ml sont corrects (le comportement du programme est celui attendu).
 
 - Question 5.2 : Implémentation d'un compilateur simple de Expr vers Pfx.
 Voir le fichier :
  - expr/basic/tests/an_example.expr
 
 Tous les tests passés (en évaluant diverses expressions arithmétiques) sont corrects.
+
+- Question 6.1 et 6.2 : Implémentation d'un lexer de Pfx.
+Voir le fichier :
+ - pfx/basic/lexer.mll
+
+Tous les tests passés (en Lexant diverses expressions de Pfx) sont corrects.
 
 ===============
 
@@ -142,6 +160,7 @@ Problèmes et bugs connus
 
 - Pas de bugs à la question 4 (implémentation d'une calculatrice simple)
 - Pas de bugs à la question 5 (implémentation d'un compilateur simple)
+- Pas de bugs à la question 6 (implémentation d'un lexer de Pfx)
 
 ===============
 
@@ -153,6 +172,6 @@ Ressources utiles
 Difficultés
 ------------
 
-Absolument aucune car je suis trop fort ;)
-Toujours aucune difficulté, je recherche désespéremment du challenge
-
+Absolument aucune car je suis trop fort. ;)
+Toujours aucune difficulté, je recherche désespéremment du challenge.
+Inarrêtable comme la pluie diluvienne de code que j'écris en abondance.

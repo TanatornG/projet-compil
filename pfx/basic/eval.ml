@@ -132,4 +132,8 @@ let () =
   let q = [Push 3; Push 7; Rem];; let stack = [];;
   printf "\n Test 16 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
   eval_program (List.length(stack), q) stack;;
-  *)
+
+  let q = [Push 2; Push 7; Push 3; Add; Div];; let stack = [];;
+  printf "\n Test 17 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
+  eval_program (List.length(stack), q) stack;;
+*)

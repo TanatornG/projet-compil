@@ -1,20 +1,19 @@
-  {
-  (*open Parser*)
+{
   type token =
-    | EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM
-    | INT of int
+    | EOF | PLUS | MINUS | TIMES | DIV | MOD | LPAR | RPAR
+    | INT of int | IDENT of string
 
   let print_token = function
     | EOF -> print_string "EOF"
-    | PUSH -> print_string "PUSH"
-    | POP -> print_string "POP"
-    | SWAP -> print_string "SWAP"
-    | ADD -> print_string "ADD"
-    | SUB -> print_string "SUB"
-    | MUL -> print_string "MUL"
+    | PLUS -> print_string "PLUS"
+    | MINUS -> print_string "MINUS"
+    | TIMES -> print_string "TIMES"
     | DIV -> print_string "DIV"
-    | REM -> print_string "REM"
+    | MOD -> print_string "MOD"
+    | LPAR -> print_string "LPAR"
+    | RPAR -> print_string "RPAR"
     | INT i -> print_int i
+    | IDENT s -> print_string s
 
   let mk_int nb =
     try INT (int_of_string nb)
@@ -23,33 +22,30 @@
 
 let newline = (['\n' '\r'] | "\r\n")
 let blank = [' ' '\014' '\t' '\012']
-let not_newline_char = [^ '\n' '\r']
 let digit = ['0'-'9']
+let letter = ['a'-'z' 'A'-'Z']
 
 rule token = parse
   (* newlines *)
-  | newline { token lexbuf }
+  | newline + { token lexbuf }
   (* blanks *)
   | blank + { token lexbuf }
   (* end of file *)
   | eof      { EOF }
-  (* comments *)
-  | "--" not_newline_char*  { token lexbuf }
   (* integers *)
   | digit+ as nb           { mk_int nb }
-  (* Question 6.1 *)
-  (* commands  *)(***** TO COMPLETE *****)
-  | "push"    { PUSH }
-  | "pop"     { POP }
-  | "swap"    { SWAP }
-  | "add"     { ADD }
-  | "sub"     { SUB }
-  | "mul"     { MUL }
-  | "div"     { DIV }
-  | "rem"     { REM }
-
+  (* commands *)
+  | "+"      { PLUS }
+  | "-"      { MINUS }
+  | "/"      { DIV }
+  | "*"      { TIMES }
+  | "%"      { MOD }
+  | "("      { LPAR }
+  | ")"      { RPAR }
+  (* identifiers *)
+  | letter (letter | digit | '_')* as id { IDENT id }
   (* illegal characters *)
-  | _ as c                  { failwith (Printf.sprintf "Illegal character '%c': " c) }
+  | _ as c  { failwith (Printf.sprintf "Illegal character '%c': " c) }
 
 {
   let rec examine_all lexbuf =
