@@ -1,5 +1,6 @@
 # 1 "lexer.mll"
    
+  open Location
   (*open Parser*)
   type token =
     | EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM
@@ -17,11 +18,11 @@
     | REM -> print_string "REM"
     | INT i -> print_int i
 
-  let mk_int nb =
+  let mk_int nb lexbuf =
     try INT (int_of_string nb)
-    with Failure _ -> failwith (Printf.sprintf "Illegal integer '%s': " nb)
+    with Failure _ -> failwith (Location.string_of (Location.curr lexbuf ))
 
-# 25 "lexer.ml"
+# 26 "lexer.ml"
 let __ocaml_lex_tables = {
   Lexing.lex_base =
    "\000\000\242\255\000\000\000\000\000\000\002\000\001\000\002\000\
@@ -130,91 +131,91 @@ let rec token lexbuf =
 and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 31 "lexer.mll"
+# 32 "lexer.mll"
             ( token lexbuf )
-# 136 "lexer.ml"
+# 137 "lexer.ml"
 
   | 1 ->
-# 33 "lexer.mll"
+# 34 "lexer.mll"
             ( token lexbuf )
-# 141 "lexer.ml"
+# 142 "lexer.ml"
 
   | 2 ->
-# 35 "lexer.mll"
+# 36 "lexer.mll"
              ( EOF )
-# 146 "lexer.ml"
+# 147 "lexer.ml"
 
   | 3 ->
-# 37 "lexer.mll"
+# 38 "lexer.mll"
                             ( token lexbuf )
-# 151 "lexer.ml"
+# 152 "lexer.ml"
 
   | 4 ->
 let
-# 39 "lexer.mll"
+# 40 "lexer.mll"
               nb
-# 157 "lexer.ml"
+# 158 "lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
-# 39 "lexer.mll"
+# 40 "lexer.mll"
                            ( mk_int nb )
-# 161 "lexer.ml"
+# 162 "lexer.ml"
 
   | 5 ->
-# 42 "lexer.mll"
+# 43 "lexer.mll"
               ( PUSH )
-# 166 "lexer.ml"
+# 167 "lexer.ml"
 
   | 6 ->
-# 43 "lexer.mll"
+# 44 "lexer.mll"
               ( POP )
-# 171 "lexer.ml"
+# 172 "lexer.ml"
 
   | 7 ->
-# 44 "lexer.mll"
+# 45 "lexer.mll"
               ( SWAP )
-# 176 "lexer.ml"
+# 177 "lexer.ml"
 
   | 8 ->
-# 45 "lexer.mll"
+# 46 "lexer.mll"
               ( ADD )
-# 181 "lexer.ml"
+# 182 "lexer.ml"
 
   | 9 ->
-# 46 "lexer.mll"
+# 47 "lexer.mll"
               ( SUB )
-# 186 "lexer.ml"
+# 187 "lexer.ml"
 
   | 10 ->
-# 47 "lexer.mll"
+# 48 "lexer.mll"
               ( MUL )
-# 191 "lexer.ml"
+# 192 "lexer.ml"
 
   | 11 ->
-# 48 "lexer.mll"
+# 49 "lexer.mll"
               ( DIV )
-# 196 "lexer.ml"
+# 197 "lexer.ml"
 
   | 12 ->
-# 49 "lexer.mll"
+# 50 "lexer.mll"
               ( REM )
-# 201 "lexer.ml"
+# 202 "lexer.ml"
 
   | 13 ->
 let
-# 52 "lexer.mll"
+# 53 "lexer.mll"
          c
-# 207 "lexer.ml"
+# 208 "lexer.ml"
 = Lexing.sub_lexeme_char lexbuf lexbuf.Lexing.lex_start_pos in
-# 52 "lexer.mll"
+# 53 "lexer.mll"
                             ( failwith (Printf.sprintf "Illegal character '%c': " c) )
-# 211 "lexer.ml"
+# 212 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
       __ocaml_lex_token_rec lexbuf __ocaml_lex_state
 
 ;;
 
-# 54 "lexer.mll"
+# 55 "lexer.mll"
  
   let rec examine_all lexbuf =
     let result = token lexbuf in
@@ -237,4 +238,4 @@ let
 
   let _ = Arg.parse [] compile ""
 
-# 241 "lexer.ml"
+# 242 "lexer.ml"

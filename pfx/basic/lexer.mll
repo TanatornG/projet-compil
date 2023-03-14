@@ -1,4 +1,5 @@
   {
+  open Location
   (*open Parser*)
   type token =
     | EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM
@@ -16,9 +17,9 @@
     | REM -> print_string "REM"
     | INT i -> print_int i
 
-  let mk_int nb =
+  let mk_int nb lexbuf =
     try INT (int_of_string nb)
-    with Failure _ -> failwith (Printf.sprintf "Illegal integer '%s': " nb)
+    with Failure _ -> failwith (Location.string_of (Location.curr lexbuf ))
 }
 
 let newline = (['\n' '\r'] | "\r\n")

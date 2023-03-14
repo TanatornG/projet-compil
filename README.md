@@ -18,7 +18,7 @@ Sources : Pdf présentant le projet (cf "compilation-project")
 
 Repo git : https://github.com/TanatornG/projet-compil.git
 
-Version : 3.0 - Exercice 6
+Version : 4.0 - Exercice 7
 
 ===============
 
