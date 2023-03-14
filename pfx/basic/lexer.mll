@@ -1,5 +1,5 @@
   {
-  open Location
+  open Utils
   (*open Parser*)
   type token =
     | EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM
@@ -37,7 +37,7 @@ rule token = parse
   (* comments *)
   | "--" not_newline_char*  { token lexbuf }
   (* integers *)
-  | digit+ as nb           { mk_int nb }
+  | digit+ as nb           { mk_int nb lexbuf }
   (* Question 6.1 *)
   (* commands  *)(***** TO COMPLETE *****)
   | "push"    { PUSH }
@@ -50,7 +50,7 @@ rule token = parse
   | "rem"     { REM }
 
   (* illegal characters *)
-  | _ as c                  { failwith (Printf.sprintf "Illegal character '%c': " c) }
+  | _ as c                  { failwith (Printf.sprintf "Illegal character '%c': " c ^Location.string_of (Location.curr lexbuf )) }
 
 {
   let rec examine_all lexbuf =
