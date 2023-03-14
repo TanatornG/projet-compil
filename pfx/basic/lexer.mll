@@ -1,8 +1,7 @@
 (* Question 6.1 et 6.2 *)
 {
   open Utils 
-  
-  type token = | EOF | INT of int | PUSH | SWAP | POP | ADD | SUB | MUL | DIV | REM
+  open Parser
 
   let print_token = function
     | EOF -> print_string "EOF"
@@ -15,6 +14,7 @@
     | MUL -> print_string "MUL"
     | DIV -> print_string "DIV"
     | REM -> print_string "REM"
+    | NEWLINE -> print_string "NEWLINE\n"
 
   let mk_int nb lexbuf =
     try INT (int_of_string nb)
@@ -28,7 +28,7 @@ let digit = ['0'-'9']
 
 rule token = parse
   (* newlines *)
-  | newline { token lexbuf }
+  | newline {NEWLINE}
   (* blanks *)
   | blank + { token lexbuf }
   (* end of file *)
@@ -53,6 +53,7 @@ rule token = parse
   let rec examine_all lexbuf =
     let result = token lexbuf in
     print_token result;
+    print_string " ";
     match result with
     | EOF -> ()
     | _   -> examine_all lexbuf
