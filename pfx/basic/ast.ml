@@ -3,21 +3,23 @@ open Printf
 Il y a trois instructions basiques : push, pop et swap.
 Il y a cinq opérations arithmétiques : add, sub, mul, div et rem.*)
 type command =
-  (* Question 4.1 *)
-  | Push of int
-  | Pop
-  | Swap
-  | Add
-  | Sub
-  | Mul
-  | Div
-  | Rem
+  | Push of int 
+  | Pop 
+  | Swap 
+  | Add 
+  | Sub 
+  | Mul 
+  | Div 
+  | Rem 
+  | Exec 
+  | Get 
+  | InstructionSeq of command list
 
 type program = int * command list
 
 (* add here all useful functions and types related to the AST: for instance string_of_functions *)
 
-let string_of_command cmd = match cmd with
+let rec string_of_command cmd = match cmd with
 | Push v-> sprintf "Push %i" v
 | Pop -> "Pop"
 | Swap -> "Swap"
@@ -26,6 +28,9 @@ let string_of_command cmd = match cmd with
 | Sub-> "Sub"
 | Div -> "Div"
 | Rem -> "Rem"
+| Exec -> "Exec"
+| Get -> "Get"
+| InstructionSeq cmds -> sprintf "[%s]" (String.concat ";" (List.map string_of_command cmds))
 
 let string_of_commands cmds = sprintf "[%s]" (String.concat ";" (List.map string_of_command cmds))
 

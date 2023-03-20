@@ -1,7 +1,12 @@
 open Ast
 open Printf
 
-let string_of_stack stack = sprintf "[%s]" (String.concat ";" (List.map string_of_int stack))
+
+type argsType = Int of int | InstructionSeq of command list
+let rec string_of_stack stack = match stack with
+  | [] -> ""
+  | (Int i)::s -> (string_of_int i) ^ string_of_stack s
+  | (InstructionSeq seq)::s -> (string_of_commands seq) ^ string_of_stack s
 
 let string_of_state (cmds,stack) =
   (match cmds with
@@ -12,41 +17,62 @@ let string_of_state (cmds,stack) =
 (* Question 4.2 *)
 (* Auteur : Nicolas Sempéré 
    Implémentation des petits pas des séquences d'instruction*)
-let step state =
-  match state with
+   let step state =
+    match state with
+    | (Push x)::q, stack -> Ok (q, (Int x)::stack)
 
-  | Push v:: q , stack            -> Ok (q, v::stack)
-  
-  | Pop :: q , _v::stack          -> Ok (q, stack)
-  | Pop :: _q , []                 -> Error("Stack is empty. Can't pop", state)
+    | Pop::_, [] -> Error("Stack is empty. Can't pop", state)
+    | Pop::q, _::stack -> Ok (q, stack)
+    
+    | Swap::_, _::[] -> Error("Stack is empty. Can't swap", state)
+    | Swap::_, [] -> Error("Stack has only one element. Can't swap", state)
+    | Swap::q, x::y::stack -> Ok (q, y::x::stack)
 
-  | Swap :: q , v1::v2::stack     -> Ok (q, v2::v1::stack)
-  | Swap :: _q , []                -> Error("Stack is empty. Can't swap", state)
-  | Swap :: _q , _v1::[]            -> Error("Stack has only one element. Can't swap", state)
-  
-  | Add :: q , v1::v2::stack    -> Ok (q, (v1+v2)::stack)
-  | Add :: _q , []                -> Error("Stack is empty. Can't add.", state)
-  | Add :: _q , _v1::[]            -> Error("Stack has only one element. Can't add", state)
-  
-  | Sub :: q , v1::v2::stack    -> Ok (q, (v1-v2)::stack)
-  | Sub :: _q , []                -> Error("Stack is empty. Can't substract", state)
-  | Sub :: _q , _v1::[]            -> Error("Stack has only one element. Can't substract", state)
-  
-  | Mul :: q , v1::v2::stack    -> Ok (q, (v1*v2)::stack)
-  | Mul :: _q , []                -> Error("Stack is empty. Can't multiply", state)
-  | Mul :: _q , _v1::[]            -> Error("Stack has only one element. Can't multiply", state)
-  
-  | Div :: _q , _v1::0::_stack         -> Error("Division by 0", state)
-  | Div :: q , v1::v2::stack    -> Ok (q, (v1/v2)::stack)
-  | Div :: _q , []                -> Error("Stack is empty. Can't divide", state)
-  | Div :: _q , _v1::[]            -> Error("Stack has only one element. Can't divide", state)
-  
-  | Rem :: _q , _v1::0::_stack         -> Error("Division by 0", state)
-  | Rem :: q , v1::v2::stack    -> Ok (q, (v1 mod v2)::stack)
-  | Rem :: _q , []                -> Error("Stack is empty. Can't calculate the remainder", state)
-  | Rem :: _q , _v1::[]            -> Error("Stack has only one element. Can't calculate the remainder", state)
-  
-  | [], _ -> Error("Nothing to step",state)
+    | Add::_, _::[] -> Error("Stack is empty. Can't add", state)
+    | Add::_, [] -> Error("Stack has only one element. Can't add", state)
+    | Add::_, (InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Add::_, _::(InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Add::q, (Int x)::(Int y)::stack -> Ok (q, (Int (x + y))::stack)
+
+    | Sub::_, _::[] -> Error("Stack is empty. Can't Sub", state)
+    | Sub::_, [] -> Error("Stack has only one element. Can't Sub", state)
+    | Sub::_, (InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Sub::_, _::(InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Sub::q, (Int x)::(Int y)::stack -> Ok (q, (Int (x - y))::stack)
+
+    | Mul::_, _::[] -> Error("Stack is empty. Can't mul", state)
+    | Mul::_, [] -> Error("Stack has only one element. Can't mul", state)
+    | Mul::_, (InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Mul::_, _::(InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Mul::q, (Int x)::(Int y)::stack -> Ok (q, (Int (x * y))::stack)
+
+    | Div::_, _::[] -> Error("Stack is empty. Can't div", state)
+    | Div::_, [] -> Error("Stack has only one element. Can't div", state)
+    | Div::_, _::(Int 0)::_ -> Error("Forbidden operation",state)
+    | Div::_, (InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Div::_, _::(InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Div::q, (Int x)::(Int y)::stack -> Ok (q, (Int (x / y))::stack)
+
+    | Rem::_, _::[] -> Error("Stack is empty. Can't rem", state)
+    | Rem::_, [] -> Error("Stack has only one element. Can't rem", state)
+    | Rem::_, _::(Int 0)::_ -> Error("Forbidden operation",state)
+    | Rem::_, (InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Rem::_, _::(InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Rem::q, (Int x)::(Int y)::stack -> Ok (q, (Int (x mod y))::stack)
+
+    | Get::_, (Int i)::stack when (List.length stack) < i -> Error("Invalid get operation", state)
+    | Get::_, (Int i)::_ when i < 0 -> Error("Cannot get negative index", state)
+    | Get::_, [] -> Error("Stack is empty. Nothing to get", state)
+    | Get::_, (InstructionSeq _)::_ -> Error("Wrong type", state)
+    | Get::q, (Int i)::stack -> Ok (q, (List.nth stack i)::stack)
+
+    | Exec::_, [] -> Error("Nothing to exec", state)
+    | Exec::_, (Int _)::_ -> Error("Wrong type", state)
+    | Exec::q, (InstructionSeq s)::stack -> Ok (s @ q, stack)
+    
+    | (InstructionSeq s)::q, stack -> Ok (q, (InstructionSeq s)::stack)
+
+    | [], _ -> Error("Nothing to step",state)
 
 let eval_program (numargs, cmds) args =
   let rec execute = function
@@ -57,13 +83,18 @@ let eval_program (numargs, cmds) args =
          match step state with
          | Ok s    -> execute s
          | Error e -> Error e
-        end
+       end
   in
   if numargs = List.length args then
     match execute (cmds,args) with
     | Ok None -> printf "No result\n"
-    | Ok(Some result) -> printf "= %i\n" result
-    | Error(msg,s) -> printf "Raised error '%s' in state %s\n" msg (string_of_state s)
+    | Ok(Some result) -> 
+      begin
+        match result with
+            | Int x -> printf "= %i\n" x
+            | InstructionSeq _ -> printf "No result\n"
+        end
+    | Error(msg,s) -> printf "Raised error %s in state %s\n" msg (string_of_state s)
   else printf "Raised error \nMismatch between expected and actual number of args\n"
 ;;
 (* Fonction de tests unitaires de eval.ml*)

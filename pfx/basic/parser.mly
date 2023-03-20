@@ -6,7 +6,7 @@
  * The tokens *
  **************)
 
-%token EOF PUSH POP SWAP ADD SUB MUL DIV REM NEWLINE
+%token EOF PUSH POP SWAP ADD SUB MUL DIV REM NEWLINE EXEC GET
 %token <int> INT
 
 
@@ -43,7 +43,10 @@ cmd:
   | MUL c=cmd { Mul::c }
   | DIV c=cmd { Div::c }
   | REM c=cmd { Rem::c }
+  | EXEC c=cmd { Exec::c }
+  | GET c=cmd { Get::c }
   | EOF { [] }
   | NEWLINE { [] }
+
 
 %%

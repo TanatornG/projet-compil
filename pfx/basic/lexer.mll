@@ -1,6 +1,6 @@
 (* Question 6.1 et 6.2 *)
 {
-  open Utils 
+  open Utils
   open Parser
 
   let print_token = function
@@ -15,6 +15,8 @@
     | DIV -> print_string "DIV"
     | REM -> print_string "REM"
     | NEWLINE -> print_string "NEWLINE\n"
+    | EXEC -> print_string "EXEC"
+    | GET -> print_string "GET"
 
   let mk_int nb lexbuf =
     try INT (int_of_string nb)
@@ -46,6 +48,8 @@ rule token = parse
   | "mul" {MUL}
   | "div" {DIV}
   | "rem" {REM}
+  | "exec" {EXEC}
+  | "get" {GET}
   (* illegal characters *)
   | _ as c                 { failwith (Location.string_of (Location.curr lexbuf)^ " : illegal character '" ^ String.make 1 c ^ "'") }
 
