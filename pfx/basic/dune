@@ -1,7 +1,7 @@
 (library
  (name basicPfx)
  (libraries utils)
- (modules Ast Lexer Parser Eval))
+ (modules Ast Parser Eval Lexer))
 
 (ocamllex lexer)
 
