@@ -178,3 +178,23 @@ Difficultés
 Absolument aucune car je suis trop fort. ;)
 Toujours aucune difficulté, je recherche désespéremment du challenge.
 Inarrêtable comme la pluie diluvienne de code que j'écris en abondance.
+
+
+Q0 est une séquance d'opérations
+v1,...,vn ⊢exec.Q,Q0 :: S →Q0 @ Q,S
+
+v1,...,vn ⊢exec.Q,[ ] →Err
+
+c ∈{add,sub,mul,div,rem},Q0 est une séquance d'opérations
+v1,...,vn ⊢c.Q,Q0 :: S →Err
+
+c ∈{add,sub,mul,div,rem},Q0 est une séquance d'opérations
+v1,...,vn ⊢c.Q,: : Q0 :: S →Err
+
+v1,...,vn ⊢get.Q,i :: x1 :: ... :: xn :: [ ] →Q,xi :: x1 :: ... :: xn :: [ ]
+
+j < i
+v1,...,vn ⊢get.Q,i :: x1 :: ... :: xj :: [ ] →Err
+
+Q0 est une séquance d'opérations
+v1,...,vn ⊢get.Q,Q0 :: S →Err

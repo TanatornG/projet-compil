@@ -2,7 +2,7 @@ open Ast
 open Printf
 
 
-type argsType = Int of int | InstructionSeq of command list
+type args = Int of int | InstructionSeq of command list
 let rec string_of_stack stack = match stack with
   | [] -> ""
   | (Int i)::s -> (string_of_int i) ^ string_of_stack s
