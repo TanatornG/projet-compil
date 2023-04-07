@@ -19,7 +19,7 @@ Sources : Pdf présentant le projet (cf "compilation-project")
 
 Repo git : https://github.com/TanatornG/projet-compil.git
 
-Version : 4.0 - Exercice 7
+Version : 6.0 - Exercice 9
 
 ===============
 
@@ -68,7 +68,18 @@ Comment...
   Le lexer fonctionne comme prévu, il reconnait les tokens suivant :
   "| EOF | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM | INT |".
 
-  A l'exercice 7, on implémente des messages d'erreur avec position dans le lexer (à faire)
+  A l'exercice 7, on implémente des messages d'erreur avec position dans le lexer.
+  On utilise le fichier /utils/location.ml dans le lexer Pfx (pfx/basic/lexer.mll).
+  Pour tester :
+  - 1 - cd pfx/basic
+  - 2 - dune exec ./lexer.exe – ./tests/ok_prog.pfx
+
+  A l'exercice 8, on implémente un parser de pfx.
+  Pour tester : 
+  - 1 - cd pfx/basic
+  - 2 - dune exec ./pfx/pfxVM.exe – ./pfx/basic/tests/okprog.pfx
+
+  A l'exercice 9
 
 ===============
 
@@ -122,7 +133,7 @@ project :
       - eval.ml              <- Implémentation faite (Question 4.2)
       - eval.mli
       - lexer.mll            <- Implémentation faite (Question 6.1 et 6.2)
-      - parser.mly           <- To edit
+      - parser.mly           <- Implémentation faite (Question 8.1 et 8.2)
       - tests: for tests
         - ok_prog.pfx
     - pfxVM.ml: main file for the pfx VM
@@ -154,6 +165,14 @@ Tous les tests passés (en évaluant diverses expressions arithmétiques) sont c
 Voir le fichier :
  - pfx/basic/lexer.mll
 
+- Question 7 : Implémentation de la localisation d'erreur du lexer de Pfx.
+
+- Question 8 : Implémentation d'un parser de Pfx.
+Voir le fichier :
+ - pfx/basic/parser.mly
+
+- Question 9
+
 Tous les tests passés (en Lexant diverses expressions de Pfx) sont corrects.
 
 ===============
@@ -164,6 +183,9 @@ Problèmes et bugs connus
 - Pas de bugs à la question 4 (implémentation d'une calculatrice simple)
 - Pas de bugs à la question 5 (implémentation d'un compilateur simple)
 - Pas de bugs à la question 6 (implémentation d'un lexer de Pfx)
+- Pas de bugs à la question 7 (implémentation d'une localisation d'erreurs de Pfx)
+- Pas de bugs à la question 8 (implémentation d'un parser de Pfx)
+- Pas de bugs à la question 9
 
 ===============
 
@@ -174,27 +196,3 @@ Ressources utiles
 
 Difficultés
 ------------
-
-Absolument aucune car je suis trop fort. ;)
-Toujours aucune difficulté, je recherche désespéremment du challenge.
-Inarrêtable comme la pluie diluvienne de code que j'écris en abondance.
-
-
-Q0 est une séquance d'opérations
-v1,...,vn ⊢exec.Q,Q0 :: S →Q0 @ Q,S
-
-v1,...,vn ⊢exec.Q,[ ] →Err
-
-c ∈{add,sub,mul,div,rem},Q0 est une séquance d'opérations
-v1,...,vn ⊢c.Q,Q0 :: S →Err
-
-c ∈{add,sub,mul,div,rem},Q0 est une séquance d'opérations
-v1,...,vn ⊢c.Q,: : Q0 :: S →Err
-
-v1,...,vn ⊢get.Q,i :: x1 :: ... :: xn :: [ ] →Q,xi :: x1 :: ... :: xn :: [ ]
-
-j < i
-v1,...,vn ⊢get.Q,i :: x1 :: ... :: xj :: [ ] →Err
-
-Q0 est une séquance d'opérations
-v1,...,vn ⊢get.Q,Q0 :: S →Err
