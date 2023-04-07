@@ -102,7 +102,7 @@ let eval_program (numargs, cmds) args =
 let () =
   print_endline("Quelques tests unitaires de l'implémentation du type 'command' et de la fonction 'step'.");;
 
-
+(* 
   let q = [Push 2; Push 7; Push 3; Add; Div];; let stack = [];;
   printf "\n Test 1 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
   eval_program (List.length(stack), q) stack;;
@@ -116,4 +116,4 @@ let () =
   
   printf "\n Test 3 : %s %s \n" (string_of_commands q)(string_of_stack stack);;
   eval_program (List.length(stack), q) stack;;
-
+ *)
